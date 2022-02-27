@@ -1,0 +1,28 @@
+﻿@model IEnumerable<SimpleStore.Models.Product>
+
+@{
+    ViewData["Title"] = "Niskie Ceny";
+}
+
+<div class="row">
+
+    @foreach (var item in Model)
+    {
+    <div class="col">
+        <a asp-action="Details" asp-route-id="@item.Id">
+            @if(item.Image!=null)
+            {
+                <img src="~/@Html.DisplayFor(modelItem => item.Image)" alt="Product Image" height="256" width="256"/>
+            }
+            else
+            {
+                <img src="~/Images/product_icon_placeholder.jpg" alt="Product Placeholder Image" height="256" width="256"/>
+            }
+            <h2>@Html.DisplayFor(modelItem => item.Price) zł</h2>
+            <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+        </a>
+    </div>
+    }
+
+</div>
+

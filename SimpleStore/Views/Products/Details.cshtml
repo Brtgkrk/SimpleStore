@@ -1,0 +1,56 @@
+﻿@model SimpleStore.Models.Product
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-4">
+        @if (Model.Image != null)
+        {
+            <img src="~/@Html.DisplayFor(model => model.Image)" alt="Product Image" class="product-image" />
+        }
+        else
+        {
+            <img src="~/Images/product_icon_placeholder.jpg" alt="Product Placeholder Image" class="product-image" />
+        }
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-6 product-right-box">
+        <h1>@Html.DisplayFor(model => model.Name)</h1>
+        <h5>Użytkownik: @Html.DisplayFor(model => model.ProductOwner)</h5>
+        <h3>Cena: @Html.DisplayFor(model => model.Price)zł</h3>
+        <h5>Pozostało sztuk: @Html.DisplayFor(model => model.Quantity)</h5>
+        <div class="input-group mb-3">
+            <form asp-action="Create" asp-controller="ProductType" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Quantity" class="control-label"></label>
+                    <input asp-for="Quantity" type="number" class="form-control" />
+                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Dodaj do koszyka" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+
+    </div>
+        <div class="col-sm-12 product-description">
+            <p>@Html.DisplayFor(model => model.Description)</p>
+        </div>
+
+        <div class="col-sm-1"></div>
+        <div class="col-sm-6 product-right-box">
+            <div class="btn-group">
+                <a asp-action="Index"><button type="button" class="btn btn-primary">Zobacz inne produkty</button></a>
+                @if (Model.ProductOwner == User.Identity.Name)
+                {
+                    <a asp-action="Edit" asp-route-id="@Model.Id"><button type="button" class="btn btn-warning">Edytuj ofertę</button></a>
+                    <a asp-action="Delete" asp-route-id="@Model.Id"><button type="button" class="btn btn-danger">Usuń ofertę</button></a>
+                }
+            </div>
+        </div>
+    </div>
+
